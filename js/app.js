@@ -21,7 +21,7 @@ var counter = 0;
   	$("#guessButton").click(function() {
 
   		var input = $('input#userGuess').val();
-  		console.log(".click: " + input);
+  		
   		input = parseInt(input);
 
 
@@ -78,23 +78,23 @@ function listTheGuess(number){
 }
 
 function hotOrCold(num){
-	console.log("Num (guess): "+ num);
+	
 	var diff = Math.abs(randomNumber - num);
 	console.log("Diff: " + diff);
 
 	if(diff > 50){
 		return "Ice cold";
 	}
-	else if(diff < 50 && diff > 30){
+	else if(diff <= 50 && diff > 30){
 		return "Cold";
 	}
-	else if(diff < 30 && diff > 20){
+	else if(diff <= 30 && diff > 20){
 		return "Warm";
 	}
-	else if(diff < 20 && diff > 10){
+	else if(diff <= 20 && diff > 10){
 		return "Hot";
 	}
-	else if(diff < 10 && diff >= 1){
+	else if(diff <= 10 && diff >= 1){
 		return "Very hot";
 	}
 	else if(diff === 0){return "You got it! Only took you "+counter+" guesses";}
