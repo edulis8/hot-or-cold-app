@@ -100,9 +100,10 @@ function hotOrCold(input){
 	else if(diffCurrent > diffPrevious){
 		return "Colder";
 	}
-	else{
-		return "Same";
+	else if(diffCurrent === diffPrevious){
+		return "Same temperature as last guess!";
 	}
+
 
 
 }
