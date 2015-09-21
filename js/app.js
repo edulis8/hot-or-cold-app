@@ -13,20 +13,25 @@ $(document).ready(function(){
   	});
 
 
- var randomNumber = randomGen();
- console.log(randomNumber);
+var randomNumber = randomGen();
+console.log(randomNumber);
 
 var counter = 0;
+var prevInput = null;
+var input = null;
 
-  	$("#guessButton").click(function() {
+/*-------------------event listeners----------------------------*/
+ $("#guessButton").click(function() {
 
-  		var input = $('input#userGuess').val();
-  		
-  		input = parseInt(input);
+  	prevInput = input;
 
+  	console.log(prevInput);
 
+  	input = $('input#userGuess').val();
 
-  		if(input && validateInput(input)){ //if input is truthy and validated, run functions
+  	input = parseInt(input);
+
+  	if(input && validateInput(input)){ //if input is truthy and validated, run functions
   			counter++;
   			console.log("validated");
   			giveFeedback(input);
@@ -35,15 +40,13 @@ var counter = 0;
   			$('input#userGuess').val('');
   	}
 
-  	});
+  });
 
   	$('a.new').click(function() {
   		newGame();
   	});
 
-
-
-
+/*----------------function-------------------------*/
 function newGame(){
 	counter = 0;
 	randomNumber = randomGen();
@@ -77,29 +80,31 @@ function listTheGuess(number){
 	$('#guessList').append('<li>'+number+'</li>')
 }
 
-function hotOrCold(num){
+function hotOrCold(input){
 	
-	var diff = Math.abs(randomNumber - num);
-	console.log("Diff: " + diff);
+	var diffCurrent = Math.abs(randomNumber - input);
+	//console.log("Diff: " + diff);
 
-	if(diff > 50){
-		return "Ice cold";
-	}
-	else if(diff <= 50 && diff > 30){
-		return "Cold";
-	}
-	else if(diff <= 30 && diff > 20){
-		return "Warm";
-	}
-	else if(diff <= 20 && diff > 10){
-		return "Hot";
-	}
-	else if(diff <= 10 && diff >= 1){
-		return "Very hot";
-	}
-	else if(diff === 0){return "You got it! Only took you "+counter+" guesses";}
+	var diffPrevious = Math.abs(randomNumber - prevInput); 
 
-	else{return "Make your Guess!";}
+	if(prevInput === null){
+		return firstPass(diffCurrent);
+	}
+
+	else if(diffCurrent === 0){
+		return "You got it!";
+	}
+	else if(diffCurrent < diffPrevious){
+		return "Hotter";
+	}
+	else if(diffCurrent > diffPrevious){
+		return "Colder";
+	}
+	else{
+		return "Same";
+	}
+
+
 }
 
 
@@ -117,6 +122,27 @@ function randomGen(){
 	return Math.floor((Math.random() * 100)+1);
 }
 
+
+function firstPass(diff){
+
+
+		if(diff > 50){
+		return "Ice cold";
+	}
+	else if(diff <= 50 && diff > 30){
+		return "Cold";
+	}
+	else if(diff <= 30 && diff > 20){
+		return "Warm";
+	}
+	else if(diff <= 20 && diff > 10){
+		return "Hot";
+	}
+	else if(diff <= 10 && diff >= 1){
+		return "Very hot";
+	}
+	else if(diff === 0){return "You got it!"}
+}
 
 
 });
