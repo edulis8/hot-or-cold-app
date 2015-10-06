@@ -297,6 +297,7 @@ input:focus {
 }
 
 ul.guessBox {
+	word-wrap: break-word;
 	height: 80px;
 	margin: 10px auto 0;
 	background: #11a8ab;

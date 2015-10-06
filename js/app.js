@@ -21,7 +21,9 @@ var prevInput = null;
 var input = null;
 
 /*-------------------event listeners----------------------------*/
- $("#guessButton").click(function() {
+ $("form").submit(function() {
+
+ 	event.preventDefault();
 
   	prevInput = input;
 
@@ -29,9 +31,9 @@ var input = null;
 
   	input = $('input#userGuess').val();
 
-  	input = parseInt(input);
+  	input = parseInt(input, 10);
 
-  	if(input && validateInput(input)){ //if input is truthy and validated, run functions
+  	if(validateInput(input)){ //if input is truthy and validated, run functions
   			counter++;
   			console.log("validated");
   			giveFeedback(input);
@@ -113,6 +115,9 @@ function validateInput(input){
 	if(input > 100 || input < 1){	
 		alert("Please enter a number between 1 and 100!")
 		$('input#userGuess').val('');
+		return false;
+	}
+	else if(isNaN(input)){
 		return false;
 	}
 	else{return true;}
